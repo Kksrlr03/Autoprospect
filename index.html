@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101211">
+  <title>Local Places Finder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-icon">P</span><span>local<span class="brand-light">finder</span></span></a>
+    <div class="top-actions"><span class="local-pill"><i></i> Personal search</span><button id="settings-button" class="text-button" type="button">API key settings</button></div>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-line"></span> GOOGLE PLACES SEARCH</div>
+      <h1>Find places<br>around <em>you.</em></h1>
+      <p class="hero-copy">Search for a type of business in an area. View its address and Google Maps listing, then request its phone and website only when you need those details.</p>
+      <div class="search-card">
+        <form id="search-form" class="search-fields">
+          <label class="field"><span>BUSINESS TYPE</span><span class="input-wrap"><span class="input-icon">⌕</span><input id="business-type" required placeholder="e.g. dentist, café, pharmacy" autocomplete="off"></span></label>
+          <span class="field-divider"></span>
+          <label class="field"><span>LOCATION</span><span class="input-wrap"><span class="input-icon pin">⌖</span><input id="location" required placeholder="e.g. Hyderabad, India" autocomplete="off"></span></label>
+          <button id="search-button" class="search-button" type="submit"><span>Search places</span><span>↗</span></button>
+        </form>
+        <button id="no-website-toggle" class="no-website-toggle" type="button" aria-pressed="false"><span class="toggle-indicator" aria-hidden="true"></span><span><b>Find businesses without a listed website</b><small>Filters results by the website field on their Google Maps listings.</small></span></button>
+        <p class="filter-caveat">This can only identify listings with no website provided. A business may still have a site that it has not added to Google.</p>
+        <div class="search-foot"><span><span class="sparkle">✳</span> Live search; results are not saved by this app</span><span id="key-status">API key not set</span></div>
+      </div>
+      <p id="status" class="status hidden" role="status" aria-live="polite"></p>
+    </section>
+    <section id="results-section" class="results-section hidden">
+      <div class="results-heading"><div><div class="section-kicker">SEARCH RESULTS</div><h2 id="results-title">Places</h2><p id="results-subtitle" class="results-subtitle"></p></div></div>
+      <nav class="pagination" aria-label="Search result pages"><button id="previous-page" class="text-button" type="button" disabled>← Previous</button><span id="page-indicator">Page 1</span><button id="next-page" class="search-button compact" type="button" disabled>Next 20 businesses →</button></nav>
+      <p id="pagination-note" class="pagination-note">Google may provide a next page after your first search. New pages are checked for duplicate business IDs.</p>
+      <div id="results-grid" class="results-grid"></div>
+      <div class="places-attribution"><span class="google-maps-wordmark" translate="no">Google Maps</span><span>Place information provided by Google Maps. Results may be incomplete or out of date.</span></div>
+      <p class="usage-note">Each page requests up to 20 places. Next 20 makes one more Google Text Search request; duplicate place IDs are removed across the full search, and previously loaded pages are cached in this tab. Google controls how many pages are available and does not promise a complete city directory. “Without a listed website” requests the website field in each page's search. Showing phone and website makes a separate Place Details request. Results stay in memory only and disappear when you refresh or close this page.</p>
+    </section>
+    <footer><span>For personal place search. Google Maps content is shown live and is not stored or exported here.</span><span><a href="https://cloud.google.com/maps-platform/terms" target="_blank" rel="noreferrer">Google Maps terms</a> · <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy</a></span></footer>
+  </main>
+  <dialog id="settings-dialog">
+    <form id="settings-form" class="dialog-card">
+      <button class="dialog-close" type="button" id="close-settings" aria-label="Close">×</button>
+      <div class="section-kicker">THIS BROWSER ONLY</div>
+      <h2>Connect Google Places</h2>
+      <p>Paste your own Google Maps Platform API key. It is kept in this tab's memory only and sent directly from this browser to Google Places. It is not stored in browser storage, included in GitHub files, or sent to an app server. Enable Places API (New), restrict the key to that API and to your GitHub Pages website referrer. Every friend enters their own key in their own browser.</p>
+      <label class="settings-label" for="api-key">GOOGLE MAPS PLATFORM API KEY</label>
+      <div class="key-row"><input id="api-key" type="password" placeholder="Paste API key" autocomplete="off" spellcheck="false"><button id="toggle-key" type="button">Show</button></div>
+      <p class="hint">A key authorizes requests; it does not make them free. Each page returns up to 20 places and Next 20 makes another search request. Restrict the key to your site origin (for example <code>https://YOUR-USERNAME.github.io</code>) and Places API (New). The key is cleared when this tab closes or refreshes. “Without a listed website” requests website data during search.</p>
+      <div id="settings-status" class="settings-status"></div>
+      <div class="dialog-actions"><button id="remove-key" class="text-button danger" type="button">Clear key from this tab</button><button class="search-button compact" type="submit">Use key in this tab</button></div>
+    </form>
+  </dialog>
+  <script src="app.js" defer></script>
+</body>
+</html>
